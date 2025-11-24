@@ -2,6 +2,9 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/database.php';
 
+// Extend PHP timeout for API calls
+set_time_limit(180);
+
 header('Content-Type: application/json');
 
 // Validate cron token
