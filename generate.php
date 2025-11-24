@@ -74,11 +74,19 @@ Select 3 highly relevant, well-regarded books that complement this topic. Choose
 Return ONLY valid JSON, no markdown code blocks or other text.
 PROMPT;
 
+// Check API key is set
+if (empty(CLAUDE_API_KEY)) {
+    echo json_encode(['status' => 'error', 'message' => 'CLAUDE_API_KEY environment variable not set']);
+    exit;
+}
+
 // Call Claude API
 $ch = curl_init('https://api.anthropic.com/v1/messages');
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST => true,
+    CURLOPT_TIMEOUT => 120,
+    CURLOPT_CONNECTTIMEOUT => 10,
     CURLOPT_HTTPHEADER => [
         'Content-Type: application/json',
         'x-api-key: ' . CLAUDE_API_KEY,
@@ -94,8 +102,14 @@ curl_setopt_array($ch, [
 ]);
 
 $response = curl_exec($ch);
+$curlError = curl_error($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
+
+if ($curlError) {
+    echo json_encode(['status' => 'error', 'message' => 'cURL error: ' . $curlError]);
+    exit;
+}
 
 if ($httpCode !== 200) {
     echo json_encode(['status' => 'error', 'message' => 'API request failed', 'code' => $httpCode, 'response' => $response]);
