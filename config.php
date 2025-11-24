@@ -1,6 +1,11 @@
 <?php
 // Blog Configuration
 
+// Load local secrets if available (for development)
+if (file_exists(__DIR__ . '/config.local.php')) {
+    require_once __DIR__ . '/config.local.php';
+}
+
 // Claude API
 define('CLAUDE_API_KEY', getenv('CLAUDE_API_KEY') !== false ? getenv('CLAUDE_API_KEY') : '');
 define('CLAUDE_MODEL', 'claude-sonnet-4-5-20250929');

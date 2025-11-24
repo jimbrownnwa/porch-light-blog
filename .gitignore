@@ -1,6 +1,9 @@
 # Database
 blog.db
 
+# Local config with secrets
+config.local.php
+
 # IDE
 .idea/
 .vscode/
