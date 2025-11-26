@@ -1,4 +1,4 @@
-# Launch Layer Blog
+# Porch Light Blog
 
 An automated blog platform that generates SEO-optimized content using Claude AI, with Amazon affiliate book recommendations.
 
