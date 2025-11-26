@@ -1,5 +1,35 @@
+<?php
+// Blog Configuration
+
+// Load local secrets if available (for development)
+if (file_exists(__DIR__ . '/config.local.php')) {
+    require_once __DIR__ . '/config.local.php';
+}
+
+// Claude API
+define('CLAUDE_API_KEY', getenv('CLAUDE_API_KEY') !== false ? getenv('CLAUDE_API_KEY') : '');
+define('CLAUDE_MODEL', 'claude-sonnet-4-5-20250929');
+
+// Amazon Affiliate
+define('AMAZON_AFFILIATE_TAG', getenv('AMAZON_AFFILIATE_TAG') !== false ? getenv('AMAZON_AFFILIATE_TAG') : '');
+
+// Cron job security token (32 hex characters)
+define('CRON_TOKEN', getenv('CRON_TOKEN') !== false ? getenv('CRON_TOKEN') : '');
+
+// Blog Settings
+define('BLOG_TITLE', 'Porch Light Blog');
+define('BLOG_DESCRIPTION', 'Proven Strategies & Frameworks for Direct Mail Success');
+define('POSTS_PER_PAGE', 10);
+
+// Database - use mounted volume in production, local dir in development
+$dbDir = is_dir('/app/data') ? '/app/data' : __DIR__;
+define('DB_PATH', $dbDir . '/blog.db');
+
+// Testing mode (5 min interval) vs Production (daily)
+define('TESTING_MODE', true);
+
 // Predefined Topics for Blog Posts
-$TOPICS=[
+$TOPICS = [
     // -------------------------------------------------
     // Problem-Aware Topics (Reddit Pains → Direct Mail)
     // -------------------------------------------------
@@ -10,14 +40,14 @@ $TOPICS=[
     "Where Does Your Marketing Budget Really Go? A Plain-English Breakdown",
     "Flat Fee, Performance, or DIY? Choosing a Marketing Model That Fits a Small Business",
 
-    // 2. Self-doubt in marketing ability (“I suck at marketing”)
+    // 2. Self-doubt in marketing ability ("I suck at marketing")
     "For Local Owners Who Think They 'Suck at Marketing': A Simple Way to Think About Growth",
     "Understanding the Basic Marketing Funnel Without the Jargon",
-    "How to Create a Clear Message When You’re Not a Marketer",
+    "How to Create a Clear Message When You're Not a Marketer",
     "A Simple 30-Day Marketing Plan for Busy Local Businesses",
 
     // 3. Massive outreach, zero results
-    "Why Thousands of Cold Emails Don’t Turn Into Customers (and What to Do Instead)",
+    "Why Thousands of Cold Emails Don't Turn Into Customers (and What to Do Instead)",
     "Permission vs Interruption: How to Reach People Without Annoying Them",
     "From Spray-and-Pray to Focused Outreach: Getting Your Offer in Front of the Right Local People",
     "Multi-Touch Marketing for Small Businesses: How Many Times Should You Follow Up?",
@@ -30,7 +60,7 @@ $TOPICS=[
 
     // 5. No ROI after long campaigns or agency work
     "A Year of Marketing, No Results: How to Run a Simple ROI Checkup",
-    "What to Do When You’ve Spent Money on Marketing and Can’t See Any Return",
+    "What to Do When You've Spent Money on Marketing and Can't See Any Return",
     "The Few Numbers That Actually Matter for Local Marketing Decisions",
     "How to Tell If a Channel Is Failing—or If It Just Needs a Better Offer",
 
@@ -55,16 +85,16 @@ $TOPICS=[
     // 9. Social media stagnation
     "Instagram Stuck? What to Do When Your Social Feels Flat",
     "Beyond Likes: Turning Social Media Activity into Real Local Customers",
-    "Content Pillars for Local Businesses: What to Post When You’re Out of Ideas",
+    "Content Pillars for Local Businesses: What to Post When You're Out of Ideas",
     "How to Use Social Proof and Reviews Across Social, Web, and Direct Mail",
 
     // 10. Lack of budget transparency
-    "Marketing Budget Confusion: How to See Exactly What You’re Paying For",
+    "Marketing Budget Confusion: How to See Exactly What You're Paying For",
     "Line-Item Marketing: A Simple Method to Understand Your True Costs",
     "How to Talk to Agencies and Vendors About Fees Without Awkwardness",
     "Open-Book Marketing: Why Transparency Builds Long-Term Trust",
 
-    // Cross-cutting “direct mail as solution” themes
+    // Cross-cutting "direct mail as solution" themes
     "When Digital Alone Stops Working: Adding One Tangible Channel to Your Mix",
     "Why Repetition Beats One-Off Campaigns in Local Marketing",
     "How to Track Offline Marketing Without Fancy Software or Dashboards",
@@ -82,7 +112,7 @@ $TOPICS=[
     "Lifetime Value: When It Makes Sense to Spend More to Acquire the Right Customers",
 
     // Targeting & Routes
-    "How to Choose USPS Routes for EDDM When You’re a Local Service Business",
+    "How to Choose USPS Routes for EDDM When You're a Local Service Business",
     "Blanket vs Targeted: When to Saturate a Neighborhood and When to Get Specific",
     "Understanding ZIP Codes, Carrier Routes, and Neighborhood Selection for Direct Mail",
 
@@ -93,7 +123,7 @@ $TOPICS=[
     "Call-to-Action Examples That Work Well on Direct Mail for Local Businesses",
 
     // Repetition, Cadence & Strategy
-    "Why Mailing Once Isn’t Enough: How Often Local Businesses Should Mail the Same Area",
+    "Why Mailing Once Isn't Enough: How Often Local Businesses Should Mail the Same Area",
     "Building a Simple 3-Touch Campaign: Awareness, Offer, and Reminder",
     "Seasonal Direct Mail Ideas for Home Services, Restaurants, and Local Shops",
 
