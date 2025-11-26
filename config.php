@@ -1,149 +1,104 @@
-<?php
-// Blog Configuration
-
-// Load local secrets if available (for development)
-if (file_exists(__DIR__ . '/config.local.php')) {
-    require_once __DIR__ . '/config.local.php';
-}
-
-// Claude API
-define('CLAUDE_API_KEY', getenv('CLAUDE_API_KEY') !== false ? getenv('CLAUDE_API_KEY') : '');
-define('CLAUDE_MODEL', 'claude-sonnet-4-5-20250929');
-
-// Amazon Affiliate
-define('AMAZON_AFFILIATE_TAG', getenv('AMAZON_AFFILIATE_TAG') !== false ? getenv('AMAZON_AFFILIATE_TAG') : '');
-
-// Cron job security token (32 hex characters)
-define('CRON_TOKEN', getenv('CRON_TOKEN') !== false ? getenv('CRON_TOKEN') : '');
-
-// Blog Settings
-define('BLOG_TITLE', 'Porch Light Blog');
-define('BLOG_DESCRIPTION', 'Proven Strategies & Frameworks for Direct Mail Success');
-define('POSTS_PER_PAGE', 10);
-
-// Database - use mounted volume in production, local dir in development
-$dbDir = is_dir('/app/data') ? '/app/data' : __DIR__;
-define('DB_PATH', $dbDir . '/blog.db');
-
-// Testing mode (5 min interval) vs Production (daily)
-define('TESTING_MODE', true);
-
 // Predefined Topics for Blog Posts
-$TOPICS = [
-    // Direct Mail Fundamentals
+$TOPICS=[
+    // -------------------------------------------------
+    // Problem-Aware Topics (Reddit Pains → Direct Mail)
+    // -------------------------------------------------
+
+    // 1. High agency fees & markups
+    "High Agency Fees: How to Stop Overpaying for Marketing and Still Get Results",
+    "Agencies vs Simple Campaigns: When Local Businesses Should Ditch Retainers",
+    "Where Does Your Marketing Budget Really Go? A Plain-English Breakdown",
+    "Flat Fee, Performance, or DIY? Choosing a Marketing Model That Fits a Small Business",
+
+    // 2. Self-doubt in marketing ability (“I suck at marketing”)
+    "For Local Owners Who Think They 'Suck at Marketing': A Simple Way to Think About Growth",
+    "Understanding the Basic Marketing Funnel Without the Jargon",
+    "How to Create a Clear Message When You’re Not a Marketer",
+    "A Simple 30-Day Marketing Plan for Busy Local Businesses",
+
+    // 3. Massive outreach, zero results
+    "Why Thousands of Cold Emails Don’t Turn Into Customers (and What to Do Instead)",
+    "Permission vs Interruption: How to Reach People Without Annoying Them",
+    "From Spray-and-Pray to Focused Outreach: Getting Your Offer in Front of the Right Local People",
+    "Multi-Touch Marketing for Small Businesses: How Many Times Should You Follow Up?",
+
+    // 4. Spinning wheels & overwhelm
+    "Marketing Overwhelm: How to Decide What Actually Deserves Your Time",
+    "The One-Page Marketing Plan for Local Businesses Who Feel Stuck",
+    "Working ON vs IN Your Business: Making Space for Marketing That Matters",
+    "How to Turn Random Marketing Tasks Into a Simple Repeatable System",
+
+    // 5. No ROI after long campaigns or agency work
+    "A Year of Marketing, No Results: How to Run a Simple ROI Checkup",
+    "What to Do When You’ve Spent Money on Marketing and Can’t See Any Return",
+    "The Few Numbers That Actually Matter for Local Marketing Decisions",
+    "How to Tell If a Channel Is Failing—or If It Just Needs a Better Offer",
+
+    // 6. High ad costs, poor conversions
+    "When Google and Facebook Ads Get Too Expensive: Options for Local Businesses",
+    "High Clicks, Low Customers: Fixing the Gap Between Interest and Action",
+    "Why Your Landing Page Might Be Costing You Customers (and How to Simplify It)",
+    "Stretching a Small Marketing Budget: Choosing Channels That Give You More per Dollar",
+
+    // 7. Comparison anxiety & competition
+    "Feeling Outgunned by Bigger Competitors? Ways Local Businesses Can Win Anyway",
+    "Standing Out in a Crowded Local Market When Everyone Looks the Same Online",
+    "The Power of Niching Down for Local Service Businesses",
+    "How Hyper-Local Targeting Helps You Compete Without Outspending Anyone",
+
+    // 8. High traffic, low conversions
+    "Lots of Traffic, Few Customers: Where Local Marketing Usually Leaks",
+    "Trust, Proof, and Offers: Three Levers to Turn Clicks into Actual Buyers",
+    "Simple Website Tweaks That Make It Easier for People to Contact You",
+    "Why Too Many Choices Hurt Conversions—and How to Simplify Your Offers",
+
+    // 9. Social media stagnation
+    "Instagram Stuck? What to Do When Your Social Feels Flat",
+    "Beyond Likes: Turning Social Media Activity into Real Local Customers",
+    "Content Pillars for Local Businesses: What to Post When You’re Out of Ideas",
+    "How to Use Social Proof and Reviews Across Social, Web, and Direct Mail",
+
+    // 10. Lack of budget transparency
+    "Marketing Budget Confusion: How to See Exactly What You’re Paying For",
+    "Line-Item Marketing: A Simple Method to Understand Your True Costs",
+    "How to Talk to Agencies and Vendors About Fees Without Awkwardness",
+    "Open-Book Marketing: Why Transparency Builds Long-Term Trust",
+
+    // Cross-cutting “direct mail as solution” themes
+    "When Digital Alone Stops Working: Adding One Tangible Channel to Your Mix",
+    "Why Repetition Beats One-Off Campaigns in Local Marketing",
+    "How to Track Offline Marketing Without Fancy Software or Dashboards",
+    "Direct Mail as the 'Steady Baseline' in a Noisy Digital World",
+
+    // -------------------------------------------------
+    // Direct Mail & EDDM Fundamentals (Authority / SEO)
+    // -------------------------------------------------
+
     "The 40-40-20 Rule: List, Offer, and Creative in Direct Mail Success",
+    "EDDM Explained: Every Door Direct Mail for Local Targeting Without Mailing Lists",
+    "Direct Mail vs Digital: When Physical Mail Outperforms Online Ads",
     "Response Rates Explained: What to Expect from Different Mail Formats",
-    "Cost Per Acquisition: Calculating True Direct Mail ROI",
-    "Lifetime Value Analysis: Justifying Higher Acquisition Costs",
-    "Direct Mail vs Digital: When Physical Mail Outperforms Email",
+    "Cost Per Acquisition: Calculating True Direct Mail ROI for Local Campaigns",
+    "Lifetime Value: When It Makes Sense to Spend More to Acquire the Right Customers",
 
-    // List Management & Targeting
-    "RFM Analysis: Recency, Frequency, Monetary Value for List Segmentation",
-    "NCOA Processing: Keeping Your Mailing List Current and Deliverable",
-    "Compiled vs Response Lists: Understanding List Sources and Quality",
-    "Merge-Purge Techniques: Eliminating Duplicates and Reducing Waste",
-    "Demographic Overlays: Enhancing Customer Data for Better Targeting",
-    "Lookalike Modeling: Finding New Prospects Similar to Your Best Customers",
-    "Suppression Files: Protecting Reputation and Reducing Complaints",
-    "ZIP+4 and Carrier Route Targeting: Geographic Precision in Direct Mail",
+    // Targeting & Routes
+    "How to Choose USPS Routes for EDDM When You’re a Local Service Business",
+    "Blanket vs Targeted: When to Saturate a Neighborhood and When to Get Specific",
+    "Understanding ZIP Codes, Carrier Routes, and Neighborhood Selection for Direct Mail",
 
-    // Creative & Design
-    "The Johnson Box: Capturing Attention with Classic Direct Mail Design",
-    "Personalization Beyond Names: Variable Data Printing for Relevance",
-    "Envelope Teaser Copy: Improving Open Rates with Strategic Messaging",
-    "The Fold Test: Optimizing Letter Layout for Immediate Impact",
-    "Color Psychology in Direct Mail: Choosing Colors That Drive Response",
-    "White Space Strategy: Using Breathing Room to Guide the Eye",
-    "Testimonials and Social Proof: Building Trust Through Customer Stories",
-    "Call-to-Action Design: Making the Next Step Crystal Clear",
+    // Creative, Offers & Design
+    "What Makes a Local Postcard Get Noticed (and Kept on the Fridge)",
+    "Designing a Postcard Offer Local Families Actually Care About",
+    "Using Testimonials and Reviews on Postcards to Build Trust Fast",
+    "Call-to-Action Examples That Work Well on Direct Mail for Local Businesses",
 
-    // Copywriting & Messaging
-    "The AIDA Formula: Attention, Interest, Desire, Action in Direct Mail",
-    "Benefit-Driven Copy: Features Tell, Benefits Sell",
-    "The Pre-Head Strategy: Setting Context Before the Main Headline",
-    "P.S. Power: Why Postscripts Get Read and Drive Response",
-    "Scarcity and Urgency: Ethical Tactics to Motivate Immediate Action",
-    "Storytelling in Sales Letters: Emotional Engagement Through Narrative",
-    "Long Copy vs Short Copy: Matching Length to Offer Complexity",
-    "The Lift Letter: Adding a Second Voice for Credibility",
+    // Repetition, Cadence & Strategy
+    "Why Mailing Once Isn’t Enough: How Often Local Businesses Should Mail the Same Area",
+    "Building a Simple 3-Touch Campaign: Awareness, Offer, and Reminder",
+    "Seasonal Direct Mail Ideas for Home Services, Restaurants, and Local Shops",
 
-    // Testing & Optimization
-    "A/B Testing Fundamentals: Statistical Significance in Direct Mail",
-    "Champion-Challenger Strategy: Continuous Improvement Through Testing",
-    "Multivariate Testing: Testing Multiple Variables Simultaneously",
-    "Test Cell Sizing: How Many Pieces to Mail for Valid Results",
-    "Offer Testing: Price Points, Premiums, and Payment Terms",
-    "Format Testing: Postcards vs Letters vs Self-Mailers",
-    "Timing Tests: Day of Week and Season Impact on Response",
-    "Package Testing: Control vs Creative Testing Methodology",
-
-    // Response Mechanisms
-    "PURL Strategy: Personalized URLs for Tracking and Conversion",
-    "QR Codes in Direct Mail: Bridging Physical and Digital Experience",
-    "BRE Design: Business Reply Envelopes That Get Returned",
-    "Toll-Free Numbers: Tracking and Staffing for Inbound Response",
-    "Landing Page Best Practices: Matching Digital to Direct Mail Messaging",
-    "Multi-Step Conversion: Lead Generation vs Direct Sale Offers",
-    "Response Device Design: Making It Easy to Say Yes",
-
-    // Economics & ROI
-    "Break-Even Analysis: Understanding Your Required Response Rate",
-    "Back-End Value: Why Customer Lifetime Value Matters More Than CPA",
-    "Allowable Cost Per Acquisition: Setting Profitability Targets",
-    "Contribution Margin: Calculating Profitability at the Piece Level",
-    "Test Budget Allocation: How Much to Spend Before Scaling",
-    "Postal Discounts: USPS Worksharing and Presort Savings",
-    "In-Home Date Targeting: Optimizing Arrival for Maximum Impact",
-
-    // Compliance & Legal
-    "CAN-SPAM and Direct Mail: Understanding the Rules",
-    "Do Not Mail Lists: Respecting Consumer Preferences",
-    "TCPA Compliance: Phone Number Use in Direct Mail Campaigns",
-    "FTC Endorsement Guidelines: Proper Use of Testimonials",
-    "ADA Compliance: Accessibility in Direct Mail Marketing",
-    "Sweepstakes Regulations: Legal Requirements for Prize Promotions",
-    "Privacy Laws and Direct Mail: GDPR, CCPA, and Data Protection",
-
-    // Integration with Digital
-    "Omnichannel Sequencing: Timing Email Follow-Up to Direct Mail",
-    "Retargeting Mail Recipients: Digital Display After Physical Touch",
-    "Social Media Integration: Driving Mail Recipients to Online Communities",
-    "Direct Mail + SMS: Text Message Follow-Up Strategies",
-    "Match-Back Analysis: Connecting Offline Mail to Online Conversions",
-    "Triggered Direct Mail: Automated Mailings Based on Digital Behavior",
-
-    // Production & Fulfillment
-    "EDDM Explained: Every Door Direct Mail for Local Targeting",
-    "Intelligent Mail Barcode: Tracking and Automation with IMb",
-    "First Class vs Standard Mail: Speed and Cost Trade-Offs",
-    "Inkjet Addressing vs Labels: Quality and Cost Considerations",
-    "Mail House Selection: Evaluating Production Partners",
-    "Print-on-Demand: Small Batch Direct Mail Economics",
-    "Bindery and Finishing: Folding, Perforating, and Special Treatments",
-
-    // Data & Analytics
-    "Match Rates Explained: Measuring List Quality and Overlap",
-    "Response Attribution: Single-Touch vs Multi-Touch Modeling",
-    "Cohort Analysis: Tracking Performance Over Customer Lifetime",
-    "Holdout Groups: Measuring Incremental Lift from Direct Mail",
-    "Response Curves: Understanding When Responses Peak and Decline",
-    "Source Code Tracking: Systematic Campaign Performance Measurement",
-
-    // Campaign Types
-    "Acquisition Mailings: Strategies for New Customer Growth",
-    "Winback Campaigns: Re-Engaging Lapsed Customers",
-    "Upsell and Cross-Sell: Mining Your House File for Revenue",
-    "Welcome Series: Onboarding New Customers Through Direct Mail",
-    "Anniversary and Birthday Mail: Leveraging Special Occasions",
-    "Reactivation Campaigns: Bringing Back Inactive Subscribers",
-    "VIP Programs: Direct Mail for High-Value Customer Retention",
-
-    // Psychology & Persuasion
-    "Cialdini's Principles: Influence and Persuasion in Direct Mail",
-    "Loss Aversion: Why 'Don't Miss Out' Outperforms 'Get This Deal'",
-    "The Decoy Effect: Pricing Strategy with Three-Tier Offers",
-    "Social Proof Hierarchy: Which Testimonials Matter Most",
-    "Authority Signals: Credentials, Awards, and Trust Markers",
-    "Reciprocity in Direct Mail: Free Samples and Gifts That Convert",
-    "Commitment and Consistency: Multi-Step Offers That Build Engagement"
+    // Tracking & Measurement
+    "Simple Ways to Track Direct Mail: QR Codes, URLs, and Phone Numbers",
+    "How to Read Your Direct Mail Results and Decide What to Do Next",
+    "Blending Direct Mail with Google and Social: A Practical Local Strategy"
 ];
