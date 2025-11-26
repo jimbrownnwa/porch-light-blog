@@ -5,7 +5,7 @@
 
 :root {
     --dark-brown: #1e3a5f;
-    --dark-brown-light: #3d2820;
+    --dark-brown-light: #162d4a;
     --orange: #ff6b4a;
     --orange-light: #ff8a6a;
     --cream: #f5f1ed;
@@ -343,6 +343,13 @@ body {
     font-weight: 700;
     line-height: 1.2;
     color: var(--dark-brown);
+}
+
+.post-author {
+    margin: 0 0 5px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark);
 }
 
 .post-header time {

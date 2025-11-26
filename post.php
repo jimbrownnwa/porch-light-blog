@@ -45,6 +45,7 @@ if (!$post) {
             <article class="post-full">
                 <header class="post-header">
                     <h1><?= htmlspecialchars($post['title']) ?></h1>
+                    <p class="post-author">By Jim Brown</p>
                     <time datetime="<?= $post['created_at'] ?>"><?= date('F j, Y', strtotime($post['created_at'])) ?></time>
                 </header>
 
