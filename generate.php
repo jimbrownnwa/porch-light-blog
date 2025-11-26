@@ -31,51 +31,18 @@ if (!$topicData) {
 $topic = $topicData['topic'];
 $topicId = $topicData['id'];
 
-// Generate blog post using Claude API
-$prompt = <<<PROMPT
-Write a comprehensive, SEO-optimized blog post about: "$topic"
-
-Target audience: Small business owners and entrepreneurs dealing with operational challenges.
-
-Requirements:
-1. Write 800-1200 words
-2. Use clear, actionable language
-3. Include practical examples relevant to small businesses
-4. Structure with H2 and H3 headings for SEO
-5. Include a compelling introduction that hooks the reader
-6. End with actionable takeaways
-
-Format your response as JSON with this exact structure:
-{
-    "title": "SEO-optimized title (may differ slightly from topic)",
-    "meta_description": "150-160 character meta description for SEO",
-    "content": "Full HTML content with <h2>, <h3>, <p>, <ul>, <li> tags. No <h1> tag.",
-    "books": [
-        {
-            "title": "Book Title",
-            "author": "Author Name",
-            "amazon_search": "exact search terms for Amazon",
-            "description": "One sentence why this book is relevant"
-        },
-        {
-            "title": "Book Title 2",
-            "author": "Author Name",
-            "amazon_search": "exact search terms for Amazon",
-            "description": "One sentence why this book is relevant"
-        },
-        {
-            "title": "Book Title 3",
-            "author": "Author Name",
-            "amazon_search": "exact search terms for Amazon",
-            "description": "One sentence why this book is relevant"
-        }
-    ]
+// Load prompt template from claude.md
+$promptTemplate = file_get_contents(__DIR__ . '/claude.md');
+if ($promptTemplate === false) {
+    echo json_encode(['status' => 'error', 'message' => 'Failed to load claude.md prompt template']);
+    exit;
 }
 
-Select 3 highly relevant, well-regarded books that complement this topic. Choose books that small business owners would find genuinely useful.
+// Replace {{TOPIC}} placeholder with actual topic
+$prompt = str_replace('{{TOPIC}}', $topic, $promptTemplate);
 
-Return ONLY valid JSON, no markdown code blocks or other text.
-PROMPT;
+// Strip the markdown header if present (first line starting with #)
+$prompt = preg_replace('/^#[^\n]*\n+/', '', $prompt);
 
 // Check API key is set
 if (empty(CLAUDE_API_KEY)) {

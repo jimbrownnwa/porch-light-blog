@@ -24,9 +24,11 @@ $totalPages = ceil($totalPosts / POSTS_PER_PAGE);
     <header class="site-header">
         <div class="container">
             <div class="header-content">
-                <h1><a href="index.php"><?= htmlspecialchars(BLOG_TITLE) ?></a></h1>
+                <div class="logo">
+                    <a href="index.php"><img src="logo.jpeg" alt="<?= htmlspecialchars(BLOG_TITLE) ?>"></a>
+                </div>
                 <nav class="site-nav">
-                    <a href="https://launchlayerlabs.com/">Home</a>
+                    <a href="https://porchlightmail.com/">Home</a>
                     <a href="#posts">Articles</a>
                     <a href="#about">About</a>
                     <a href="#subscribe" class="btn-primary">Get Updates</a>
@@ -37,7 +39,7 @@ $totalPages = ceil($totalPosts / POSTS_PER_PAGE);
 
     <section class="hero">
         <div class="container">
-            <h2>Business principles that work.<br><span class="gradient-text">Frameworks that scale.</span></h2>
+            <h2>Smarter Local Marketing.<br><span class="gradient-text">Without the Overwhelm.</span></h2>
             <p><?= htmlspecialchars(BLOG_DESCRIPTION) ?></p>
             <div class="hero-buttons">
                 <a href="#posts" class="btn-primary">Read Articles</a>
@@ -49,24 +51,24 @@ $totalPages = ceil($totalPosts / POSTS_PER_PAGE);
     <section class="features" id="about">
         <div class="container">
             <div class="features-header">
-                <h2>Why Launch Layer Blog?</h2>
-                <p>Proven frameworks and actionable insights for small business success.</p>
+                <h2>Why Read the Porch Light Blog?</h2>
+                <p>Proven frameworks and actionable insights for small business marketing success.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon blue">&#9889;</div>
                     <h3>Actionable Insights</h3>
-                    <p>Every article delivers practical strategies you can implement immediately to improve your operations.</p>
+                    <p>Every article delivers practical strategies you can implement immediately to improve your marketing.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon cyan">&#9650;</div>
-                    <h3>Proven Frameworks</h3>
-                    <p>Learn established principles like Lean, Six Sigma, and OKRs adapted specifically for small businesses.</p>
+                    <h3>Proven Frameworks for Local Marketing</h3>
+                    <p>Clear, practical principles tailored to small businesses using direct mail and neighborhood outreach to build steady customer flow.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon orange">&#9733;</div>
-                    <h3>Curated Resources</h3>
-                    <p>Each post includes recommended books and tools to deepen your knowledge and accelerate growth.</p>
+                    <h3>Easy-to-Use Resources</h3>
+                    <p>Each post offers simple, actionable tools designed to save you time and help your local marketing work better..</p>
                 </div>
             </div>
         </div>

@@ -27,9 +27,11 @@ if (!$post) {
     <header class="site-header">
         <div class="container">
             <div class="header-content">
-                <h1><a href="index.php"><?= htmlspecialchars(BLOG_TITLE) ?></a></h1>
+                <div class="logo">
+                    <a href="index.php"><img src="logo.jpeg" alt="<?= htmlspecialchars(BLOG_TITLE) ?>"></a>
+                </div>
                 <nav class="site-nav">
-                    <a href="https://launchlayerlabs.com/">Home</a>
+                    <a href="https://porchlightmail.com/">Home</a>
                     <a href="index.php#posts">Articles</a>
                     <a href="index.php#about">About</a>
                     <a href="#subscribe" class="btn-primary">Get Updates</a>
